@@ -1,0 +1,17 @@
+- name: Get Proxmox node info
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Get node status
+      uri:
+        url: "https://{{ proxmox_api_host }}:8006/api2/json/nodes/{{ proxmox_node }}/status"
+        method: GET
+        headers:
+          Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+        validate_certs: false
+      register: result
+
+    - debug:
+        var: result.json
