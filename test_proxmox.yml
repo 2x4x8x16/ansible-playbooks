@@ -1,0 +1,16 @@
+- name: Test Proxmox API
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Get nodes
+      uri:
+        url: "https://{{ proxmox_api_host }}:8006/api2/json/nodes"
+        method: GET
+        headers:
+          Authorization: "PVEAPIToken={{ proxmox_api_user }}!{{ proxmox_api_token_id }}={{ proxmox_api_token_secret }}"
+        validate_certs: false
+      register: result
+
+    - debug:
+        var: result.json
