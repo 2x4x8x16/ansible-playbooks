@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Aktualizacja bloku Proxmox w /etc/hosts
+      blockinfile:
+        path: /etc/hosts
+        marker: "# {mark} ANSIBLE MANAGED PROXMOX HOSTS"
+        block: |
+          10.10.20.3 prox03
+          10.10.20.4 prox04
+          10.10.20.5 prox05
